@@ -1,69 +1,82 @@
-## injekt (stable) ##
+<!--
+## [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt) ##
+-->
 
-a tiny dependency injection framework for [NodeJS](http://nodejs.org/)
+## INJEKT - Simple Dependency Injection
 
-### Installation ###
+> INJEKT is a tiny dependency injection framework for [NodeJS](http://nodejs.org/).
+
+<!--
+  * overview of dependency injection
+  * overview of inversion of control
+  * overview of context isolation
+-->
+
+## Installation ##
 
     npm install injekt
 
-### Syntax + Usage ###
+<!--
+  * option: clone github
+  * option: download raw injekt.js
+-->
 
-###### Library Instantiation: `require('injekt')(default_options, closure);`
+## Syntax + Usage ##
 
-    require('injekt')({
-      'context' : {
-        'inspect' : require('util').inspect
-      },
-      'mocks' : { 
-        'EmptyObject' : Object.create({ })
-      }
-    });
+##### Library Instantiation: `require('injekt')(` `default_options` `[, closure]` `);`
 
+```javascript
+require('injekt')({
+  'context' : {
+    'inspect' : require('util').inspect
+  },
+  'mocks' : { 
+    'assert' : require('should')
+  }
+});
+```
 
-###### Module Injection: `injekt(module_path, options);`
-    
-    var my_module = injekt('./my_module.js', {
-      'context' : { 
-        'fs' : require('fs')
-      },
-      'mocks' : {
-        'Foo' : Object.create({ bar: function () { return 'YIPPPEEEE!'; } })
-      }
-    });;
+* NOTE: `closure` defaults to `global` when excluded.
 
+##### Module Injection: `injekt(` `module_path` `[, options]` `);`
 
-* NOTE: `module_path` resolution is still a little wonky (confirmed bug).
-* more documentation under construction
+```javascript    
+var my_module = injekt('./my_module.js', {
+  'context' : { 
+    'EventEmitter' : require('events').EventEmitter
+  },
+  'mocks' : {
+    'Foo' : Object.create({ bar: function () { return 'YIPPPEEEE!'; } })
+  }
+});
+```
 
-### Current Goals ###
+* NOTE: `module_path` must be relative to the overall working directory.
 
-1. set up vows to test `injekt` via `npm` module
-2. set up milestones on [GitHub](https://github.com/aeberlin/injekt/issues)
-3. transfer repository to the `arkbot` github account
-4. finish writing vows (~80% complete)
-5. write documentation
+## Current Goals ##
 
-### Future Thoughts ###
+* Set up milestones on [GitHub's Issue Tracker](https://github.com/aeberlin/injekt/issues)
+* Create proper API + usage documentation
 
-* standardize the `module_path` resolution with that of `require()` (via `require.resolve()`)
-* allow isolated pockets of non-strict compatibility
-* use factories for `params` parsing / `properties` building
-* use itself to inject it's own dependencies
-* setup compatability with [RequireJS](http://www.requirejs.org)
+## Future Thoughts ##
 
-### Bug Reports + Feature Requests ###
+* Use factories for `params` parsing / `properties` building
+* Setup compatability with [RequireJS](http://www.requirejs.org)
 
-* please submit an issue on [GitHub](https://github.com/aeberlin/injekt/issues) (e-mail me before sending a pull request)
+## Bug Reports + Feature Requests ##
 
-* please attach at least one of the following for bug reports:
+* Please submit an issue on the [GitHub Issue Tracker](https://github.com/aeberlin/injekt/issues).
+
+* Please attach at least one of the following for bug reports:
 
   * diagnostic procedure
   * sample code
   * assertion tests
 
-### Further Notes ###
+* Please e-mail me before sending a pull request.
 
-* released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt))
-* tested via the [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows) packages
-* recommended waiting until version 0.2.0 before using outside a risk-free environment.
-* documentation is still sparse and under construction
+## Further Notes ##
+
+* Released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt)).
+* Project developed with a full integration test suite via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
+* DISCLAIMER: This project is still highly experimental.

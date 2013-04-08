@@ -11,11 +11,9 @@
       this.required = this.required || { };
       this.required[key] = require(key);
     },
-    'path_for_injekt' : function () {
-      return './test/fake/file.js';
-    },
-    'path_for_require' : function () {
-      return './fake/file.js';
+    'do_inject' : function (key) {
+      this.injected = this.injected || { };
+      this.injected[key] = injekt(key);
     }
   };
 
