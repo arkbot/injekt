@@ -1,7 +1,9 @@
 "use strict";
 
 // var inspect = require('util').inspect;
-var fake = require('./fake/fake.js'), vows = require('vows'), should = require('should');
+var paths = require('./resources/paths.js');
+var pseudo = require(paths['pseudo'])(paths);
+var vows = require('vows'), should = require('should');
 var suite = vows.describe('injekt:integration:closure');
 
 suite.addBatch({
@@ -10,7 +12,7 @@ suite.addBatch({
 
     'with a closure' : {
       topic : function () {
-        return fake.psuedotopic({});
+        return pseudo.topic({});
       },
       'embeds into closure' : function (subject) {
         should.exist(subject.Injekt, '`closure.Injekt` was not set!');
@@ -31,64 +33,70 @@ suite.addBatch({
 
     'without options' : {
       topic : function () {
-        return fake.psuedotopic({});
+        return pseudo.topic({});
       },
       'embeds new instance of itself into injected context' : function (subject) {
-        var that = fake.psuedoinjekt(subject)();
+        var that = pseudo.inject(subject)();
         should.isObject(that.context('Injekt'), '`Injekt` was not embedded into context!');
         should.isFunction(that.context('injekt'), '`injekt` was not embedded into context!');
         should.isFalse(that.context('Injekt') === subject.Injekt, '`Injekt` was not a new instance!');
         should.isFalse(that.context('injekt') === subject.injekt, '`Injekt` was not a new instance!');
       },
       '`require` finds external modules' : function (subject) {
-        var that = fake.injekt_and_require(subject, 'util');
+        var that = pseudo.inject_and_require(subject, 'util');
         should.exist(that.context('this.required').util, "`require('util')` did not return module!");
       },
       '`require` finds external files' : function (subject) {
-        var that = fake.injekt_and_require(subject, '../test/fake/file.js');
-        should.exist(that.context('this.required')['../test/fake/file.js'], "`require(''../test/fake/file.js'')` did not return module!");
+        var that = pseudo.inject_and_require(subject, paths['file']);
+        should.exist(that.context('this.required')[paths['file']], "`require(\"paths['file']\")` did not return module!");
+      },
+      '`require` finds `module_path` relative to file location, and not working directory' : function (subject) {
+        should.isTrue(false);
+      },
+      '`injekt` finds `module_path` relative to file location, and not working directory' : function (subject) {
+        should.isTrue(false);
       }
     },
 
     'with embeds' : {
       topic : function () {
-        return fake.psuedotopic({}, {
+        return pseudo.topic({}, {
           'foo' : Object.create({ value: 'bar'})
         });
       },
       'has direct access to embeds inside injected context' : function (subject) {
-        var that = fake.psuedoinjekt(subject)();
+        var that = pseudo.inject(subject)();
         should.exist(that.context('foo'), 'mock was not embedded!');
         should.isObject(that.context('foo'), 'mock was not of expected type!');
         should.exist(that.context('foo').value, 'mock was missing expected content!');
       },
       '`require` finds external modules' : function (subject) {
-        var that = fake.injekt_and_require(subject, 'util');
+        var that = pseudo.inject_and_require(subject, 'util');
         should.exist(that.context('this.required').util, "`require('util')` did not return module!");
       },
       '`require` finds external files' : function (subject) {
-        var that = fake.injekt_and_require(subject, '../test/fake/file.js');
-        should.exist(that.context('this.required')['../test/fake/file.js'], "`require(''../test/fake/file.js'')` did not return module!");
+        var that = pseudo.inject_and_require(subject, paths['file']);
+        should.exist(that.context('this.required')[paths['file']], "`require('paths['file']')` did not return module!");
       }
     },
 
     'with mocks' : {
       topic : function () {
-        return fake.psuedotopic({}, {}, {
+        return pseudo.topic({}, {}, {
           'inspect' : require('util').inspect
         });
       },
       'loads mocks on require inside injected context' : function (subject) {
-        var that = fake.injekt_and_require(subject, 'inspect');
+        var that = pseudo.inject_and_require(subject, 'inspect');
         should.exist(that.context('this.required').inspect, "`require('inspect')` did not return mock!");
       },
       '`require` finds external modules' : function (subject) {
-        var that = fake.injekt_and_require(subject, 'fs');
+        var that = pseudo.inject_and_require(subject, 'fs');
         should.exist(that.context('this.required').fs, "`require('fs')` did not return module!");
       },
       '`require` finds external files' : function (subject) {
-        var that = fake.injekt_and_require(subject, '../test/fake/file.js');
-        should.exist(that.context('this.required')['../test/fake/file.js'], "`require(''../test/fake/file.js'')` did not return module!");
+        var that = pseudo.inject_and_require(subject, paths['file']);
+        should.exist(that.context('this.required')[paths['file']], "`require('paths['file']')` did not return module!");
       }
     }
 

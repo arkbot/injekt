@@ -1,8 +1,9 @@
 "use strict";
 
-// var inspect = require('util').inspect;
-var fake = require('./fake/fake.js'), vows = require('vows'), should = require('should');
-var suite = vows.describe('injekt:integration:global');
+var paths = require('./resources/paths.js');
+var pseudo = require(paths['pseudo'])(paths);
+var vows = require('vows'), should = require('should');
+var suite = vows.describe('injekt:integration:closure');
 
 suite.addBatch({
 
@@ -10,7 +11,7 @@ suite.addBatch({
 
     'without a closure' : {
       topic : function () {
-        return fake.psuedotopic();
+        return pseudo.topic();
       },
       'embeds into global' : function (subject) {
         should.exist(global.Injekt, '`global.Injekt` was not set!');
@@ -24,10 +25,10 @@ suite.addBatch({
 
     'without options' : {
       topic : function () {
-        return fake.psuedotopic({});
+        return pseudo.topic({});
       },
       'embeds new instance of itself into injected context' : function (subject) {
-        var that = fake.psuedoinjekt(subject)();
+        var that = pseudo.inject(subject)();
         should.isObject(that.context('Injekt'), '`Injekt` was not embedded into context!');
         should.isFunction(that.context('injekt'), '`injekt` was not embedded into context!');
         should.isFalse(that.context('Injekt') === global.Injekt, '`Injekt` was not a new instance!');

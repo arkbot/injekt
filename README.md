@@ -63,7 +63,7 @@ a tiny dependency injection framework for [NodeJS](http://nodejs.org/)
 
 ### Further Notes ###
 
-* released under the [MIT License](http://www.opensource.org/licenses/MIT)
+* released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt))
 * tested via the [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows) packages
 * recommended waiting until version 0.2.0 before using outside a risk-free environment.
 * documentation is still sparse and under construction
