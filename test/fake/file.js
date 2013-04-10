@@ -1,7 +1,8 @@
-/* jslint node: true */
+/* jshint node: true, strict: true, maxdepth: 2, maxcomplexity: 4, undef: true */
+/* jshint indent: 2, quotmark: single */
 /* global injekt */
 
-"use strict";
+'use strict';
 
 (function () {
 

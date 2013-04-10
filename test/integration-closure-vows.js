@@ -1,6 +1,7 @@
-/* jslint node: true */
+/* jshint node: true, strict: true, maxdepth: 2, maxcomplexity: 4, undef: true */
+/* jshint indent: 2, quotmark: single */
 
-"use strict";
+'use strict';
 
 var paths = require('./resources/paths.js');
 var pseudo = require(paths.file_relative.for_test.pseudo)(paths);
@@ -46,11 +47,11 @@ suite.addBatch({
       },
       '`require` finds external modules' : function (subject) {
         var that = pseudo.inject_and_require(subject, 'util');
-        should.exist(that.context('this.required').util, "`require('util')` did not return module!");
+        should.exist(that.context('this.required').util, '`require("util")` did not return module!');
       },
       '`require` resolves relative to file location, and not working directory' : function (subject) {
         var that = pseudo.inject_and_require(subject, paths.file_relative.for_pseudo.file);
-        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], "`require(paths.file_relative.for_pseudo.file)` did not return module!");
+        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], '`require(paths.file_relative.for_pseudo.file)` did not return module!');
       },
       '`injekt` resolves relative to working directory, and not file location' : function (subject) {
         should.isTrue(false);
@@ -71,11 +72,11 @@ suite.addBatch({
       },
       '`require` finds external modules' : function (subject) {
         var that = pseudo.inject_and_require(subject, 'util');
-        should.exist(that.context('this.required').util, "`require('util')` did not return module!");
+        should.exist(that.context('this.required').util, '`require("util")` did not return module!');
       },
       '`require` resolves relative to file location, and not working directory' : function (subject) {
         var that = pseudo.inject_and_require(subject, paths.file_relative.for_pseudo.file);
-        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], "`require('paths.file_relative.for_pseudo.file')` did not return module!");
+        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], '`require("paths.file_relative.for_pseudo.file")` did not return module!');
       }
     },
 
@@ -87,15 +88,15 @@ suite.addBatch({
       },
       'loads mocks on require inside injected context' : function (subject) {
         var that = pseudo.inject_and_require(subject, 'inspect');
-        should.exist(that.context('this.required').inspect, "`require('inspect')` did not return mock!");
+        should.exist(that.context('this.required').inspect, '`require("inspect")` did not return mock!');
       },
       '`require` finds external modules' : function (subject) {
         var that = pseudo.inject_and_require(subject, 'fs');
-        should.exist(that.context('this.required').fs, "`require('fs')` did not return module!");
+        should.exist(that.context('this.required').fs, '`require("fs")` did not return module!');
       },
       '`require` resolves relative to file location, and not working directory' : function (subject) {
         var that = pseudo.inject_and_require(subject, paths.file_relative.for_pseudo.file);
-        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], "`require('paths.file_relative.for_pseudo.file')` did not return module!");
+        should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], '`require("paths.file_relative.for_pseudo.file")` did not return module!');
       }
     }
 
