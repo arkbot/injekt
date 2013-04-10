@@ -1,3 +1,5 @@
+/* jslint node: true */
+
 "use strict";
 
 (function () {
@@ -20,7 +22,7 @@
       };
     };
 
-    for (i in params) {
+    for (var i in params) {
       props[i] = with_defaults(params[i]);
     }
 

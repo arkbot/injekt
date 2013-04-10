@@ -29,8 +29,7 @@
   },
 
   "dependencies"        : {
-    "contextify"          : "0.1.5",
-    "underscore"          : "1.4.x"
+    "contextify"          : "0.1.5"
   },
 
   "devDependencies"     : {

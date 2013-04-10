@@ -1,3 +1,5 @@
+/* jslint node: true */
+
 "use strict";
 
 // var inspect = require('util').inspect;

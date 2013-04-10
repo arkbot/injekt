@@ -1,3 +1,5 @@
+/* jslint node: true */
+
 "use strict";
 
 var paths = require('./resources/paths.js');

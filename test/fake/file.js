@@ -1,3 +1,6 @@
+/* jslint node: true */
+/* global injekt */
+
 "use strict";
 
 (function () {
