@@ -1,6 +1,7 @@
 <!--
 ## [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt) ##
--->
+-->## Syntax: Library Instantiation
+Syntax: Module Injection
 
 ## INJEKT - Simple Dependency Injection
 
@@ -8,7 +9,8 @@ INJEKT is a tiny dependency injection framework for [NodeJS](http://nodejs.org/)
 
 * [Background Philosophy](https://github.com/arkbot/injekt#background-philosophy)
 * [Installation](https://github.com/arkbot/injekt#installation-options)
-* [Syntax + Usage](https://github.com/arkbot/injekt#syntax--usage)
+* [Library Instantiation](https://github.com/arkbot/injekt#syntax-library-instantiation)
+* [Module Injection](https://github.com/arkbot/injekt#syntax-module-injection)
 * [Current Goals](https://github.com/arkbot/injekt#current-goals)
 * [Future Thoughts](https://github.com/arkbot/injekt#future-thoughts)
 * [Bug Reports + Other Requests](https://github.com/arkbot/injekt#bug-reports--other-requests)
@@ -76,7 +78,7 @@ var MyPlane = Object.create({
 });
 ```
 
-This is where a proper injection mechanism comes in handy. You could use a constructor or an initialization method in order to inject your engine and propeller objects, as shown above, but this is less than ideal. Constructors are meant to be used for setting member variables, and not significantly changing class behavior at run-time, which a dependency can certainly do. We want our objects to be open for extension, but closed for modification, so we must decouple our dependencies without violating any design principles.
+You could use a constructor or an initialization method in order to inject your engine and propeller objects, as shown above, but this is less than ideal. Constructors are meant to be used for setting member variables, and not significantly changing class behavior at run-time, which a structural dependency can certainly do. We want our objects to be open for extension, but closed for modification, so we must decouple our dependencies without violating any design principles.
 
 Let's draw up some quick companions for our overly-simplified `MyPlane` object.
 
@@ -151,9 +153,9 @@ In addition to the options below, you can download either the [raw export](https
 
     git clone git@github.com:arkbot/injekt.git
 
-## Syntax + Usage ##
+## Syntax: Library Instantiation
 
-#### Library Instantiation: `require('injekt')(` `default_options` `[, closure]` `);`
+> General Usage: `require('injekt')(` `default_options` `[, closure]` `);`
 
 The following examples are all valid. Use them wisely.
 
@@ -208,7 +210,9 @@ require('injekt')({
 
 * NOTE: `closure` defaults to `global` when excluded.
 
-#### Module Injection: `injekt(` `module_path` `[, options]` `);`
+## Syntax: Module Injection
+
+> General Usage: `injekt(` `module_path` `[, options]` `);`
 
 INJEKT gives you two different methods of injecting your dependencies:
 
