@@ -1,7 +1,6 @@
 <!--
 ## [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt) ##
--->## Syntax: Library Instantiation
-Syntax: Module Injection
+-->
 
 ## INJEKT - Simple Dependency Injection
 
