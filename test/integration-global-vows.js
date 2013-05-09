@@ -7,7 +7,7 @@ var paths = require('./resources/paths.js');
 var pseudo = require(paths.file_relative.for_test.pseudo)(paths);
 
 var vows = require('vows'), should = require('should');
-var suite = vows.describe('injekt:integration:closure');
+var suite = vows.describe('injekt:integration:global');
 
 suite.addBatch({
 

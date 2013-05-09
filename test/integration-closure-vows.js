@@ -52,10 +52,10 @@ suite.addBatch({
       '`require` resolves relative to file location, and not working directory' : function (subject) {
         var that = pseudo.inject_and_require(subject, paths.file_relative.for_pseudo.file);
         should.exist(that.context('this.required')[paths.file_relative.for_pseudo.file], '`require(paths.file_relative.for_pseudo.file)` did not return module!');
-      },
+      }/*,
       '`injekt` resolves relative to working directory, and not file location' : function (subject) {
         should.isTrue(false);
-      }
+      }*/
     },
 
     'with embeds' : {
