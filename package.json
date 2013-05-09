@@ -3,7 +3,7 @@
   "version"             : "0.1.9",
   "homepage"            : "https://github.com/arkbot/injekt",
   "author"              : "Arkbot Industries <webmaster@arkbot.com>",
-  "description"         : "a tiny dependency injection framework for NodeJS",
+  "description"         : "A tiny dependency injection framework for NodeJS",
   "keywords"            : [ "dependency", "injection", "context", "isolation", "mock" ],
   "license"             : "MIT",
 
