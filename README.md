@@ -2,143 +2,169 @@
 ## [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt) ##
 -->
 
-## INJEKT - Simple Dependency Injection
+# [INJEKT](https://github.com/arkbot/injekt)
 
-INJEKT is a tiny dependency injection framework for [NodeJS](http://nodejs.org/).
+INJEKT is a tiny, integration-tested dependency injection framework for [NodeJS](http://nodejs.org/).
 
-* [Background Philosophy](https://github.com/arkbot/injekt#background-philosophy)
-* [Installation](https://github.com/arkbot/injekt#installation-options)
-* [Library Instantiation](https://github.com/arkbot/injekt#syntax-library-instantiation)
-* [Module Injection](https://github.com/arkbot/injekt#syntax-module-injection)
-* [Current Goals](https://github.com/arkbot/injekt#current-goals)
-* [Future Thoughts](https://github.com/arkbot/injekt#future-thoughts)
-* [Bug Reports + Other Requests](https://github.com/arkbot/injekt#bug-reports--other-requests)
-* [Further Notes](https://github.com/arkbot/injekt#further-notes)
+* [Background Philosophy](#background-philosophy)
+* [Installation](#installation-options)
+* [Library Instantiation](#syntax-library-instantiation)
+* [Module Injection](#syntax-module-injection)
+* [Current Goals](#current-goals)
+* [Future Thoughts](#future-thoughts)
+* [Bug Reports + Other Requests](#bug-reports--other-requests)
+* [Further Notes](#further-notes)
 
-Feel free to [skip ahead](https://github.com/arkbot/injekt#installation-options) if you know what you're looking for.
+Feel free to [skip ahead](#installation-options) if you know what you're looking for.
 
-## Background Philosophy ##
+# Background Philosophy ##
 
 > **NOTE: This section is still under construction.**
 
-To put it less concisely, INJEKT is a platform for loading your software dependencies in an injectable manner. For those of you not familiar with the principles behind _Dependency Injection_ (dependency inversion, inversion of control, context isolation, etc.), you're probably wondering what I mean by _an injectable manner_. I'll give you a hint, the following code is the complete opposite of what I mean:
-
-```javascript
-var MyPlane = Object.create({
-  'init' : function () {
-    var Engine = require('engine.js'), Propeller = require('propeller.js'); // bad bad bad
-    this.engine = new Engine();
-    this.propeller = new Propeller();    
-  }
-});
-```
-
-Notice my comment in the code above? If that doesn't sit well with you, don't worry. We'll come back to it.
-
-After scouring the web, I've noticed that the supporting language and logical rhetoric can obscure the underlying ideals behind _Dependency Injection_ and its practical implications. With that being said, perhaps we should digress briefly into some intellectual banter regarding design patterns and general programming strategy.
+While scouring the web in my previous research on the subject, I've noticed that the logical rhetoric can obscure the underlying ideals behind _Dependency Injection_ and its practical implications. With that being said, this section will briefly digress into some intellectual banter regarding design patterns and general programming strategy, and conclude with an simplified example of implementing this philosophy using INJECT.
 
 Part of our job, as _responsible software engineers_, is to ensure that we write maintainable code that can be readily adjusted to changes in functional requirements. While there are many methodologies available to help us meet this goal, we should be able to agree, in general, that our code is implicitly maintainable if each tier of the platform is _reliable_, _performant_, and _individually testable_.
 
-#### Inversion of Control Life Cycle ####
-
-<!-- TODO: brief overview of dependency inversion principle -->
-
-<!-- TODO: revisit "bad bad bad" comment -->
-
-One interpretation of these ideals, which I am heavily biased towards, is that software architecture should be designed in a declarative, top-down fashion, where the consumer explicitly tells the product how to satisfy its contract dependencies. Since the terminology piles up rather quickly, we should briefly define some of the big players in the life cycle.
-
-1. Provider (the injection mechanism)
-2. Consumer (the parent context which we require the injected module)
-3. Product (the injected module)
-4. Contract Dependencies (interfaces required by the product)
-   * declared dependency (e.g. Pilot)
-   * resolved dependency (e.g. StudentPilot)
-
-Decoupled objects are bound together at run time, in a cascading manner, as determined by their parent context.
-
-<!-- TODO: further overview of inversion of control + decoupling -->
-
-The most obvious implication of this pattern is that it forces consumers to be inherently testable from any angle, in addition to reinforcing the maintainability of the overall platform, by enforcing distinct organizational boundaries.
-
-<!-- TODO: brief overview of context isolation -->
-
-These are the key principles behind _Inversion of Control_.
-
-#### Practical Applications ####
-
-Pursuing the theme from our previous example further, and taking this knowledge into account, we can easily integrate some lightweight dependency inversion into our software design. Although this adheres to the most basic form of dependency inversion, we will want to add an additional layer of abstraction in order to maintain our sanity (as functional scope increases), among other reasons.
+To put it less concisely, INJEKT is a platform for loading your software dependencies in an injectable manner. For those of you not familiar with the principles behind _Dependency Injection_ (dependency inversion, inversion of control, context isolation, etc.), you're probably wondering what _an injectable manner_ constitutes. Here's a hint, the following code is the complete opposite of what I mean:
 
 ```javascript
-var MyPlane = Object.create({
-  'init' : function (engine, propeller) {
-    this.engine = engine;
-    this.propeller = propeller;   
+var Car = Object.create({
+  'init' : function () {
+    var Engine = require('engine.js'), LockingMechanism = require('locking_mechanism.js'); // bad bad bad
+    this.engine = new Engine();
+    this.locking_mechanism = new LockingMechanism();    
   }
 });
 ```
 
-You could use a constructor or an initialization method in order to inject your engine and propeller objects, as shown above, but this is less than ideal. Constructors are meant to be used for setting member variables, and not significantly changing class behavior at run-time, which a structural dependency can certainly do. We want our objects to be open for extension, but closed for modification, so we must decouple our dependencies without violating any design principles.
+### Inversion of Control Life Cycle
 
-Let's draw up some quick companions for our overly-simplified `MyPlane` object.
+One interpretation of these ideals, which I'm heavily biased towards, is that software architecture should be designed in a declarative, top-down fashion, where the consumer explicitly tells the product how to satisfy its contract dependencies. Decoupled objects are bound together at run time, in a cascading manner, as determined by their parent context. One obvious implication of this pattern is that it forces consumers to be inherently testable from any angle, by enforcing distinct organizational boundaries, which additionally reinforces the maintainability of the application.
+
+> TODO: brief overview of dependency inversion principle
+
+Since the terminology piles up rather quickly, here's a brief outline of the big players in the life cycle.
+
+1. Provider
+2. Consumer
+3. Product
+4. Contracts
+   * declared dependency
+   * resolved dependency
+
+#### Provider
+
+The Provider, also known as the injector, is the mechanism which _injects_ dependencies into the Product module. It usually takes the form of a wrapper object, which acts like `require()` and other loading mechanisms, but provides a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) for inserting dependencies at a higher context.
+
+#### Consumer
+
+The Consumer is the dependent parent context which uses the Product module. This classification is relative. For example, `Car` acts as a Consumer while using `Engine`, but from a different parent context, can also act as a Product (e.g. when used by the application driver).
+
+#### Product
+
+The Product is the required module that dependencies are injected into from the immediate parent context.
+
+This classification is also relative, in a manner similiar to the way Consumer is relative to context.
+
+#### Contracts
+
+Contracts are the dependencies injected into the Product module, and are classified in two different ways. A _Declared Dependency_ is the contract definition of an interface, while a _Resolved Dependency_ is the implementation of that contract. For example, `Engine` is declared by the contract with `Car`, but may be resolved as `DieselEngine` or any other implementation that implements the appropriate interface.
+
+> TODO: further overview of inversion of control + brief overview of context isolation
+
+These are the key principles behind [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection).
+
+### Practical Applications ####
+
+Pursuing the theme from the previous example, here's a simplified example that implements the _most basic_ ideals of dependency injection.
 
 ```javascript
-// MyEngine.js:
-var MyEngine = {
-  'start' : function () { ... },
-  'stop' : function () { ... }
-};
-module.exports = Object.create(MyEngine);
-
-// MyPropeller.js:
-var MyPropeller = { ... };
-module.exports = Object.create(MyPropeller);
+var Car = Object.create({
+  'init' : function (engine, locking_mechanism) {
+    this.engine = engine;
+    this.locking_mechanism = locking_mechanism;   
+  }
+});
 ```
 
-There we go, that's a bit better. Since we want to keep things simple, let's only focus on `MyEngine`.
+You can use a constructor or an initialization method in order to inject your `Engine` and `LockingMechanism` objects, as shown above, but this is less than ideal. Constructors are meant to be used for setting member variables, and should not be used to dictate internal class behavior, from an architectural perspective. Objects should be open for extension, but closed for modification, so dependencies must be inserted via a different mechanism.
 
-In order to avoid violating the [Open/Close Principle](https://en.wikipedia.org/wiki/Open/closed_principle), we design a simple, contractual interface in which we maintain the assumption that an `Engine` must be able to start and stop. Therefore, we decouple `Engine` from `Plane` such that changes can be made to implementation of the `Engine` without affecting the internal behavior of the `Plane`, and vice-versa. More importantly, this enables us to also bind different implementations of the dependency (as long as it satisfies the contract) at run-time.
-
-Keeping all this in mind, don't you think it'd be wonderful if we could just ask for an `Engine` object and have peace of mind in knowing that it will always use the implementation that we want it to use? Let's adjust our code from earlier as if we could:
+Keeping the [Open/Close Principle](https://en.wikipedia.org/wiki/Open/closed_principle) in mind, we design a simple, contractual interface in which we maintain the assumptions that an `Engine` must be able to `start()` / `stop()` and a locking mechanism must be able to `lock()` / `unlock()` the doors. In the updated example below, `Engine` is decoupled from `Car` such that changes can be made to implementation of the `Engine` without affecting the internal behavior of the `Car`, and vice-versa. More importantly, this enables us to also bind different implementations of a dependency at run-time, as long as it satisfies the contract.
 
 ```javascript
-// MyPlane.js:
-var MyPlane = {
-  'init' : function () {
-    this.engine = require('engine');
-    this.propeller = require('propeller'); 
+// engine.js:
+
+var Engine = {
+  'start' : function () {
+    console.log('DEBUG: Engine started!');
   },
-  'fly' : function () {
-    this.engine.start();
-    // ...
+  'stop' : function () {
+    console.log('DEBUG: Engine stopped!');
   }
 };
-module.exports = Object.create(MyPlane);
+module.exports = Object.create(Engine);
+```
+```javascript
+// automatic_locks.js:
+
+var AutomaticLocks = {
+  'lock' : function () { 
+    console.log('DEBUG: Doors locked!');
+  },
+  'unlock' : function () { 
+    console.log('DEBUG: Doors unlocked!');
+  }
+};
+module.exports = Object.create(AutomaticLocks);
 ```
 
-Even though I added some supporting functionality, it's still pretty similar to our code from before, right?
+And here is an updated `Car` module which depends on the components above.
 
-#### Enter INJEKT
+```javascript
+// car.js:
 
-Remember when I said earlier that we'll want to add an additional layer of abstraction in order to maintain our sanity? You've probably already connected the dots - we needed an injection mechanism. Something to bind our components together at run-time. Using INJEKT, the integration is trivial.
+var Car = {
+  'init' : function () {
+    this.engine = require('engine');
+    this.locking_mechanism = require('locking_mechanism');
+  },
+  'start' : function () {
+    this.engine.start();
+    this.locking_mechanism.lock();
+  },
+  'stop' : function () {
+    this.engine.stop();
+    this.locking_mechanism.unlock();
+  },
+  'drive' : function () { ... }
+};
+module.exports = Object.create(Car);
+```
+
+Up to this point, all the `Car` components have been decoupled, but they still need to be bound together at run-time. Unless a `package.json` exists for each component (undeniably overkill), `require()` won't find what it's looking for. However, with INJEKT, which extends the functionality of `require()`, the integration is trivial.
 
 ```javascript
 var injekt = require('injekt')();
 
-var engine_implementation = require('/MyEngine.js');
-var propeller_implementation = require('/MyPropeller.js');
+var engine_implementation = require('components/engine.js');
+var locking_implementation = require('components/automatic_locks.js');
 
-var my_plane = injekt('./MyPlane.js', {
+var my_car = injekt('./car.js', {
   'mocks' : {
-    'engine'    : engine_implementation,
-    'propeller' : propeller_implementation
+    'engine'            : engine_implementation,
+    'locking_mechanism' : locking_implementation
   }
 });
 
-my_plane.init();
-my_plane.fly();
+my_car.init();
+my_car.start();
+my_car.drive();
+my_car.stop();
 ```
 
-<!-- TODO: conclusion -->
+> TODO: conclusion
+
+And that's all, folks.
 
 ## Installation Options ##
 
@@ -257,6 +283,6 @@ var my_module = injekt('./my_module.js', {
 ## Further Notes ##
 
 * Released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt)).
-* Project developed with a full integration test suite via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
+* Accompanied by a full integration test suite, via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
 * Donations: `1GJBTdLM8mV1GxiEXQ9HCrpYBjh7envMj8`
 * DISCLAIMER: This project is highly experimental - updates may break backwords-compatibility.
