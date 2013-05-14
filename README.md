@@ -45,13 +45,6 @@ One interpretation of these ideals, which I'm heavily biased towards, is that so
 
 Since the terminology piles up rather quickly, here's a brief outline of the big players in the life cycle.
 
-1. Provider
-2. Consumer
-3. Product
-4. Contracts
-   * declared dependency
-   * resolved dependency
-
 #### Provider
 
 The Provider, also known as the injector, is the mechanism which _injects_ dependencies into the Product module. It usually takes the form of a wrapper object, which acts like `require()` and other loading mechanisms, but provides a [DSL](https://en.wikipedia.org/wiki/Domain-specific_language) for inserting dependencies at a higher context.
@@ -166,25 +159,25 @@ my_car.stop();
 
 And that's all, folks.
 
-## Installation Options ##
+# Installation Options
 
 In addition to the options below, you can download either the [raw export](https://raw.github.com/arkbot/injekt/master/lib/injekt.js) or [package tarball](https://github.com/arkbot/injekt/tarball/master).
 
-##### Install via `npm`:
+### Install via `npm`:
 
     npm install injekt
 
-##### Clone GIT repository:
+### Clone GIT repository:
 
     git clone git@github.com:arkbot/injekt.git
 
-## Syntax: Library Instantiation
+# Syntax: Library Instantiation
 
 > General Usage: `require('injekt')(` `default_options` `[, closure]` `);`
 
 The following examples are all valid. Use them wisely.
 
-##### Minimal Reference
+### Minimal Reference
 
 ```javascript
 var injekt = require('injekt')();
@@ -192,7 +185,7 @@ var injekt = require('injekt')();
 
 * NOTE: `closure` defaults to empty `{ }` when `default_options` are excluded.
 
-##### Reference via `require(...)`: `injekt(...)`
+### Reference via `require(...)`: `injekt(...)`
 
 ```javascript
 var injekt = require('injekt')({
@@ -205,7 +198,7 @@ var injekt = require('injekt')({
 }, { });
 ```
 
-##### Reference via `closure`: `closure.injekt(...)`
+### Reference via `closure`: `closure.injekt(...)`
 
 ```javascript
 var closure = {};
@@ -220,7 +213,7 @@ require('injekt')({
 }, closure);
 ```
 
-##### Reference via `global`: `global.injekt(...)`
+### Reference via `global`: `global.injekt(...)`
 
 ```javascript
 require('injekt')({
@@ -235,7 +228,7 @@ require('injekt')({
 
 * NOTE: `closure` defaults to `global` when excluded.
 
-## Syntax: Module Injection
+# Syntax: Module Injection
 
 > General Usage: `injekt(` `module_path` `[, options]` `);`
 
@@ -257,19 +250,19 @@ var my_module = injekt('./my_module.js', {
 
 * NOTE: `module_path` must be relative to the overall working directory.
 
-## Current Goals ##
+# Current Goals
 
 * Set up milestones on [GitHub's Issue Tracker](https://github.com/aeberlin/injekt/issues)
 * Create proper API + usage documentation
 
-## Future Thoughts ##
+# Future Thoughts
 
 * Use factories for `params` parsing / `properties` building
 * Integrate browser compatability:
   * Setup individual interfaces for [RequireJS](http://www.requirejs.org) and [NodeJS](http://nodejs.org/docs/v0.4.7/api/modules.html#all_Together...).
   * Investigate engine support for [Contextify](https://npmjs.org/package/contextify).
 
-## Bug Reports + Other Requests ##
+# Bug Reports + Other Requests
 
 * Please submit an issue on the [GitHub Issue Tracker](https://github.com/aeberlin/injekt/issues).
 
@@ -280,7 +273,7 @@ var my_module = injekt('./my_module.js', {
 
 * Please e-mail me before sending a pull request.
 
-## Further Notes ##
+# Further Notes
 
 * Released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt)).
 * Accompanied by a full integration test suite, via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
