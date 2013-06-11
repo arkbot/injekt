@@ -1,6 +1,4 @@
-<!--
-## [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt) ##
--->
+[![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo.png)](https://github.com/arkbot/injekt)
 
 # [INJEKT](https://github.com/arkbot/injekt)
 
@@ -278,4 +276,4 @@ var my_module = injekt('./my_module.js', {
 * Released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt)).
 * Accompanied by a full integration test suite, via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
 * Donations: `1GJBTdLM8mV1GxiEXQ9HCrpYBjh7envMj8`
-* DISCLAIMER: This project is highly experimental - updates may break backwords-compatibility.
+* DISCLAIMER: This project is highly experimental - updates may break backwords-compatibility.-compatibility.
