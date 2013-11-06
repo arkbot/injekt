@@ -5,17 +5,18 @@
   "author"              : "Arkbot Industries <webmaster@arkbot.com>",
   "description"         : "A tiny dependency injection framework for NodeJS",
   "keywords"            : [ "dependency", "injection", "context", "isolation", "mock" ],
-  "license"             : "MIT",
+  "licenses"            : [ {
+    "type"                : "MIT",
+    "url"                 : "https://github.com/arkbot/injekt/blob/master/LICENSE.txt"
+  } ],
 
   "preferGlobal"        : false,
   "analyze"             : false,
 
-  "contributors"        : [ 
-    {
-      "name"                : "Adam Eberlin",
-      "email"               : "adam@arkbot.com"
-    } 
-  ],
+  "contributors"        : [ {
+    "name"                : "Adam Eberlin",
+    "email"               : "adam@arkbot.com"
+  } ],
 
   "scripts"             : {
     "test"                : "vows --spec --isolate test/*-vows.js"
@@ -29,11 +30,11 @@
   },
 
   "dependencies"        : {
-    "contextify"          : "0.1.5"
+    "contextify"          : "0.1.x"
   },
 
   "devDependencies"     : {
-    "should"              : "1.2.x",
+    "should"              : "2.0.x",
     "vows"                : "0.7.x"
   },
 
