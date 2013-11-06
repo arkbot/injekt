@@ -1,5 +1,7 @@
 [![INJEKT - Simple Dependency Injection](https://raw.github.com/arkbot/injekt/master/resources/images/logo-small.png)](https://github.com/arkbot/injekt)
 
+[![Dependency Status](https://gemnasium.com/arkbot/injekt.png)](https://gemnasium.com/arkbot/injekt) [![Code Climate](https://codeclimate.com/github/arkbot/injekt.png)](https://codeclimate.com/github/arkbot/injekt)
+
 INJEKT is a tiny, integration-tested dependency injection framework for [NodeJS](http://nodejs.org/).
 
 * [Background Philosophy](#background-philosophy)
