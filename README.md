@@ -17,6 +17,8 @@ Feel free to [skip ahead](#installation-options) if you know what you're looking
 
 > **NOTE: This section is still under construction.**
 
+<!--
+
 While scouring the web in my previous research on the subject, I've noticed that the logical rhetoric can obscure the underlying ideals behind _Dependency Injection_ and its practical implications. With that being said, this section will briefly digress into some intellectual banter regarding design patterns and general programming strategy, and conclude with an simplified example of implementing this philosophy using INJECT.
 
 Part of our job, as _responsible software engineers_, is to ensure that we write maintainable code that can be readily adjusted to changes in functional requirements. While there are many methodologies available to help us meet this goal, we should be able to agree, in general, that our code is implicitly maintainable if each tier of the platform is _reliable_, _performant_, and _individually testable_.
@@ -154,6 +156,8 @@ my_car.stop();
 > TODO: conclusion
 
 And that's all, folks.
+
+-->
 
 # Installation Options
 
