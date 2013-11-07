@@ -1,6 +1,8 @@
-/* jshint node: true, strict: true, maxdepth: 2, maxcomplexity: 4, undef: true */
+/* jshint node: true, strict: true, maxdepth: 2, maxcomplexity: 5, undef: true */
 /* jshint indent: 2, quotmark: single */
 /* global injekt */
+
+/* jshint -W061 */
 
 'use strict';
 
