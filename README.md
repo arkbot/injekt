@@ -287,4 +287,3 @@ var my_module = injekt('./my_module.js', {
 
 * Released under the [MIT License](http://www.opensource.org/licenses/MIT) ([attached](https://github.com/arkbot/injekt/blob/master/LICENSE.txt)).
 * Accompanied by a full integration test suite, via [`should`](https://npmjs.org/package/should) and [`vows`](https://npmjs.org/package/vows).
-* DISCLAIMER: This project is still highly experimental - updates may break backwords-compatibility.
